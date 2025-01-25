@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Release.Name }} 
+  name: {{ .Release.Name }} 
+spec:
+  replicas: {{ .Values.deployment.replicas }} 
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  strategy: {}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+    spec:
+      containers:
+      - image: "{{ .Values.deployment.image.repository }}:{{ .Values.deployment.image.tag }}"
+        imagePullPolicy: {{ .Values.deployment.image.imagePullPolicy }}
+        args: 
+        {{- include "buildkite-agent-metrics.args" . | indent 8 -}}
+        envFrom:
+        {{- if .Values.deployment.token.existingSecret.enabled }}
+        - secretRef:
+            name: {{ .Values.deployment.token.existingSecret.name }}
+        {{- end }}
+        {{- with .Values.deployment.additionalEnvFrom }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        env:
+        {{- if not .Values.deployment.token.existingSecret.enabled }}
+        - name: BUILDKITE_AGENT_TOKEN
+          value: {{ .Values.deployment.token.value }}
+        {{- end }}
+        {{- with .Values.deployment.additionalEnv }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+        name: "buildkite-agent-metrics"
+        ports:
+          - containerPort: 8080
+        resources: 
+        {{- toYaml .Values.deployment.resources  | nindent 10 }}

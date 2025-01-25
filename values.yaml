@@ -1,0 +1,66 @@
+---
+
+deployment:
+  replicas: 1
+  resources: {}
+    # limits:
+    #   cpu: 100m
+    #   memory: 128Mi
+    # requests:
+    #   cpu: 100m
+    #   memory: 128Mi
+  additionalEnv: {}
+    # - name: BUILDKITE_AGENT_TOKEN_NEW
+    #   value: "this-is-not-a-real-token"
+  additionalEnvFrom: {}
+    # - secretRef:
+    #   name: my-secret
+  # additionalVolumes: {}
+  # additionalVolumeMounts: {}
+  additionalArgs: []
+
+  token:
+    existingSecret:
+      enabled: false
+      name: ""
+    value: "this-is-not-a-real-token"
+
+  image:
+    repository: public.ecr.aws/buildkite/agent-metrics
+    tag: v5.9.12
+    imagePullPolicy: "Always"
+
+config:
+  backend: "cloudwatch"
+  interval: "30s"
+  queue: "default"
+  debug: "false"
+  debugHTTP: "false"
+  dryRun: "false"
+  endpoint: "https://agent.buildkite.com/v3"
+  maxIdleConns: "100"
+  quiet: "false"
+  timeout: "15"
+
+  cloudwatch:
+    cloudwatchDimensions: ""
+    cloudwatchRegion: "us-east-1"
+    cloudwatchHighResolution: "false"
+
+  prometheus:
+    prometheusAddr: ":8080"
+    prometheusPath: "/metrics"
+
+  statsd:
+    statsdHost: ""
+    statsdTags: "false"
+
+  newrelic:
+    newrelicAppName: ""
+    newrelicLicenseKey: ""
+
+  stackdriver:
+    stackdriverProjectid: ""
+
+metrics:
+  enabled: false
