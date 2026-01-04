@@ -38,6 +38,6 @@ spec:
         {{- end }}
         name: "buildkite-agent-metrics"
         ports:
-          - containerPort: 8080
+          - containerPort: {{ .Values.deployment.containerPort | default 8080 }}
         resources: 
         {{- toYaml .Values.deployment.resources  | nindent 10 }}
