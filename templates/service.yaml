@@ -13,6 +13,7 @@ spec:
   - port: {{ .Values.config.statsd.statsdHost | default ":8125" | splitList ":" | last }}
   {{- end }}
     protocol: TCP
+    name: metrics
   {{- if eq .Values.config.backend "prometheus" }}
     targetPort: {{ .Values.config.prometheus.prometheusAddr | default ":8080" | splitList ":" | last }}
   {{- else }}
