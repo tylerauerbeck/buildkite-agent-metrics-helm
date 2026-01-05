@@ -4,6 +4,13 @@ metadata:
   labels:
     app: {{ .Release.Name }} 
     {{- include "builkdite-agent-metrics-helm.labels" . | nindent 4 }}
+    {{- with .Values.deployment.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.deployment.additionalAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   name: {{ .Release.Name }} 
 spec:
   replicas: {{ .Values.deployment.replicas }} 

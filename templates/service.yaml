@@ -5,6 +5,13 @@ metadata:
   labels:
     app: {{ .Release.Name }}
     {{- include "builkdite-agent-metrics-helm.labels" . | nindent 4 }}
+    {{- with .Values.service.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.additionalAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   name: {{ .Release.Name }}
 spec:
   ports:
