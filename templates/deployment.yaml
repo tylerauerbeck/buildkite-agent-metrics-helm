@@ -38,6 +38,10 @@ spec:
         {{- end }}
         name: "buildkite-agent-metrics"
         ports:
-          - containerPort: {{ .Values.deployment.containerPort | default 8080 }}
+          {{- if eq .Values.config.backend "prometheus" }}
+        - containerPort: {{ .Values.config.prometheus.prometheusAddr | default ":8080" | splitList ":" | last }}
+          {{- else if eq .Values.config.backend "cloudwatch"}}
+        - containerPort: {{.Values.config.statsd.statsHost | default "127.0.0.1:8125" | splitList ":" | last }}
+          {{- end }}
         resources: 
         {{- toYaml .Values.deployment.resources  | nindent 10 }}
