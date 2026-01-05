@@ -27,7 +27,7 @@ deployment:
 
   image:
     repository: public.ecr.aws/buildkite/agent-metrics
-    tag: v5.9.12
+    tag: v5.11.0
     imagePullPolicy: "Always"
 
 config:
