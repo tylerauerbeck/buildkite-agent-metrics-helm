@@ -3,6 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app: {{ .Release.Name }} 
+    {{- include "builkdite-agent-metrics-helm.labels" . | nindent 4 }}
   name: {{ .Release.Name }} 
 spec:
   replicas: {{ .Values.deployment.replicas }} 
