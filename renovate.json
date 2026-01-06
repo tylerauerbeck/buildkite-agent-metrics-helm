@@ -22,7 +22,7 @@
   ],
   "packageRules": [
     {
-      "matchPackageNames": ["buildkite/agent-metrics"],
+      "matchPackageNames": ["public.ecr.aws/buildkite/agent-metrics"],
       "groupName": "buildkite agent-metrics image version and chart appVersion",
       "matchManagers": ["regex"]
     }
