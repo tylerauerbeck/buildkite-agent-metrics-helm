@@ -1,30 +1,15 @@
 {
-  "extends": ["config:recommended"],
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
   "regexManagers": [
     {
-      "fileMatch": ["^values.yaml$"],
+      "fileMatch": ["(^|/)Chart\\.yaml$"],
       "matchStrings": [
-        "tag:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+        "#\\s?renovate: image=(?<depName>.*?)\\s?appVersion:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)"
       ],
-      "depNameTemplate": "buildkite/agent-metrics",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
-    },
-    {
-      "fileMatch": ["^Chart.yaml$"],
-      "matchStrings": [
-        "appVersion:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
-      ],
-      "depNameTemplate": "buildkite/agent-metrics",
-      "datasourceTemplate": "docker",
-      "versioningTemplate": "docker"
-    }
-  ],
-  "packageRules": [
-    {
-      "matchPackageNames": ["public.ecr.aws/buildkite/agent-metrics"],
-      "groupName": "buildkite agent-metrics image version and chart appVersion",
-      "matchManagers": ["regex"]
+      "datasourceTemplate": "docker"
     }
   ]
 }
