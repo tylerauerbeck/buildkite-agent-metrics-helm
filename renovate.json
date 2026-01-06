@@ -1,13 +1,30 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
-  "helm": {
-    "chartAppVersion": {
-      "enabled": true,
-      "source": {
-        "file": "values.yaml",
-        "path": "image.tag"
-      }
+  "regexManagers": [
+    {
+      "fileMatch": ["^values.yaml$"],
+      "matchStrings": [
+        "tag:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "buildkite/agent-metrics",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
+    },
+    {
+      "fileMatch": ["^Chart.yaml$"],
+      "matchStrings": [
+        "appVersion:\\s*(?<currentValue>v\\d+\\.\\d+\\.\\d+)"
+      ],
+      "depNameTemplate": "buildkite/agent-metrics",
+      "datasourceTemplate": "docker",
+      "versioningTemplate": "docker"
     }
-  }
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["buildkite/agent-metrics"],
+      "groupName": "buildkite agent-metrics image version and chart appVersion",
+      "matchManagers": ["regex"]
+    }
+  ]
 }
