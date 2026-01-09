@@ -22,11 +22,5 @@ jobs:
         id: release
         with:
           token: ${{ secrets.RP_TOKEN }}
-          release-type: simple
-
-      - name: Publish Helm chart
-        if: ${{ steps.release.outputs.release_created }}
-        uses: helm/chart-releaser-action@v1.6.0
-        env:
-          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
