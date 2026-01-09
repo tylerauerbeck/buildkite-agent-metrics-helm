@@ -1,15 +1,7 @@
 {
   "$schema": "https://github.com/googleapis/release-please/releases/latest/schema.json",
-  "release-type": "generic",
+  "release-type": "helm",
   "packages": {
-    ".": {
-      "extra-files": [
-        {
-          "path": "Chart.yaml",
-          "type": "yaml",
-          "jsonpath": "$.version"
-        }
-      ]
-    }
+    ".": {}
   }
 }
