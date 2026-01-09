@@ -12,7 +12,21 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: googleapis/release-please-action@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Release Plz
+        uses: googleapis/release-please-action@v4
+        id: release
         with:
           token: ${{ secrets.RP_TOKEN }}
           release-type: simple
+
+      - name: Publish Helm chart
+        if: ${{ steps.release.outputs.release_created }}
+        uses: helm/chart-releaser-action@v1.6.0
+        env:
+          CR_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+
