@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/tylerauerbeck/buildkite-agent-metrics-helm/compare/v1.0.0...v1.0.1) (2026-01-09)
+
+
+### Bug Fixes
+
+* add chart releaser ([3c9617c](https://github.com/tylerauerbeck/buildkite-agent-metrics-helm/commit/3c9617c27c61aa2a45912a8922c97cb7f1680bde))
+
 ## 1.0.0 (2026-01-09)
 
 
