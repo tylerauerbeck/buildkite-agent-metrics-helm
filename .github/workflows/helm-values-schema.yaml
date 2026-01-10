@@ -5,6 +5,9 @@ on:
     paths:
     - 'values.yaml'
 
+permissions:
+  contents: write
+
 jobs:
   generate:
     runs-on: ubuntu-latest
