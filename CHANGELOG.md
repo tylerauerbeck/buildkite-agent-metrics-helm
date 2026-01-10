@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0](https://github.com/tylerauerbeck/buildkite-agent-metrics-helm/compare/builkdite-agent-metrics-v0.1.0...builkdite-agent-metrics-v0.2.0) (2026-01-10)
+
+
+### Features
+
+* initialize chart ([c3b58df](https://github.com/tylerauerbeck/buildkite-agent-metrics-helm/commit/c3b58df6de688f17bf4bd4c272ea0b4a896ae53f))
+
 ## [0.1.0](https://github.com/tylerauerbeck/buildkite-agent-metrics-helm/compare/builkdite-agent-metrics-v0.0.1...builkdite-agent-metrics-v0.1.0) (2026-01-10)
 
 
