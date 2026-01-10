@@ -1,0 +1,35 @@
+name: Publish Helm Chart to GHCR
+
+on:
+  push:
+    tags:
+      - '*'
+
+permissions:
+  contents: read 
+  packages: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v4
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Package Helm Chart
+        run: helm package .
+
+      - name: Push Helm Chart To GHCR
+        run: |
+          CHART=$(ls *.tgz)
+          helm push "$CHART" oci://ghcr.io/${{ github.repository_owner }}/buildkite-agent-metrics

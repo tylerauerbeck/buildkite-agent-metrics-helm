@@ -1,0 +1,7 @@
+apiVersion: v2
+name: builkdite-agent-metrics
+description: A Helm chart for deploying buildkite-agent-metrics to Kubernetes
+type: application
+version: 0.1.0
+# renovate: image=public.ecr.aws/buildkite/agent-metrics
+appVersion: "5.11.0"

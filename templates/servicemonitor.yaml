@@ -1,0 +1,26 @@
+{{- if and (.Values.serviceMonitor.enabled) (.Values.config.backend "prometheus") -}}
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    {{- include "builkdite-agent-metrics-helm.labels" . | nindent 4 }}
+    {{- with .Values.serviceMonitor.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.serviceMonitor.additionalAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}
+  namespaceSelector:
+    matchNames:
+      - {{ .Release.Namespace }}
+  endpoints:
+  - port: metrics
+    interval: {{ .Values.serviceMonitor.scrapeInterval | default "15s" }}
+    path: {{ .Values.config.prometheus.prometheusPath | default "/metrics" }}
+{{- end }}

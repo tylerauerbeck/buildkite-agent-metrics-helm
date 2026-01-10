@@ -1,0 +1,32 @@
+{{- if or (eq .Values.config.backend "cloudwatch") (eq .Values.config.backend "prometheus") }}
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ .Release.Name }}
+    {{- include "builkdite-agent-metrics-helm.labels" . | nindent 4 }}
+    {{- with .Values.service.additionalLabels }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+  {{- with .Values.service.additionalAnnotations }}
+  annotations:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  name: {{ .Release.Name }}
+spec:
+  ports:
+  {{- if eq .Values.config.backend "prometheus" }}
+  - port: {{ .Values.config.prometheus.prometheusAddr | default ":8080" | splitList ":" | last }}
+  {{- else }}
+  - port: {{ .Values.config.statsd.statsdHost | default ":8125" | splitList ":" | last }}
+  {{- end }}
+    protocol: TCP
+    name: metrics
+  {{- if eq .Values.config.backend "prometheus" }}
+    targetPort: {{ .Values.config.prometheus.prometheusAddr | default ":8080" | splitList ":" | last }}
+  {{- else }}
+    targetPort: {{.Values.config.statsd.statsdHost | default "127.0.0.1:8125" | splitList ":" | last }}
+  {{- end }}
+  selector:
+    app: {{ .Release.Name }}
+{{- end }}
