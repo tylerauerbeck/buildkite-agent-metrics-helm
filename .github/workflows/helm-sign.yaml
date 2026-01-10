@@ -19,8 +19,17 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v6
+
+      - name: Login to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Install cosign
         uses: sigstore/cosign-installer@v3
+
       - name: Extract chart name and version
         id: chartinfo
         run: |
@@ -28,6 +37,7 @@ jobs:
           VERSION=$(helm show chart . | grep '^version:' | awk '{print $2}')
           echo "name=${CHART_NAME}" >> $GITHUB_OUTPUT
           echo "version=${VERSION}" >> $GITHUB_OUTPUT
+
       - name: Sign Chart
         env:
           COSIGN_EXPERIMENTAL: "1"
