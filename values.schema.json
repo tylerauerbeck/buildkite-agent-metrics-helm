@@ -1,0 +1,183 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "config": {
+            "type": "object",
+            "properties": {
+                "backend": {
+                    "type": "string"
+                },
+                "cloudwatch": {
+                    "type": "object",
+                    "properties": {
+                        "cloudwatchDimensions": {
+                            "type": "string"
+                        },
+                        "cloudwatchHighResolution": {
+                            "type": "string"
+                        },
+                        "cloudwatchRegion": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "debug": {
+                    "type": "string"
+                },
+                "debugHTTP": {
+                    "type": "string"
+                },
+                "dryRun": {
+                    "type": "string"
+                },
+                "endpoint": {
+                    "type": "string"
+                },
+                "interval": {
+                    "type": "string"
+                },
+                "maxIdleConns": {
+                    "type": "string"
+                },
+                "newrelic": {
+                    "type": "object",
+                    "properties": {
+                        "newrelicAppName": {
+                            "type": "string"
+                        },
+                        "newrelicLicenseKey": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "prometheus": {
+                    "type": "object",
+                    "properties": {
+                        "prometheusAddr": {
+                            "type": "string"
+                        },
+                        "prometheusPath": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "queue": {
+                    "type": "string"
+                },
+                "quiet": {
+                    "type": "string"
+                },
+                "stackdriver": {
+                    "type": "object",
+                    "properties": {
+                        "stackdriverProjectid": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "statsd": {
+                    "type": "object",
+                    "properties": {
+                        "statsdHost": {
+                            "type": "string"
+                        },
+                        "statsdTags": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "timeout": {
+                    "type": "string"
+                }
+            }
+        },
+        "deployment": {
+            "type": "object",
+            "properties": {
+                "additionalAnnotations": {
+                    "type": "object"
+                },
+                "additionalArgs": {
+                    "type": "array"
+                },
+                "additionalEnv": {
+                    "type": "object"
+                },
+                "additionalEnvFrom": {
+                    "type": "object"
+                },
+                "additionalLabels": {
+                    "type": "object"
+                },
+                "image": {
+                    "type": "object",
+                    "properties": {
+                        "imagePullPolicy": {
+                            "type": "string"
+                        },
+                        "repository": {
+                            "type": "string"
+                        },
+                        "tag": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "replicas": {
+                    "type": "integer"
+                },
+                "resources": {
+                    "type": "object"
+                },
+                "token": {
+                    "type": "object",
+                    "properties": {
+                        "existingSecret": {
+                            "type": "object",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            }
+                        },
+                        "value": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "service": {
+            "type": "object",
+            "properties": {
+                "additionalAnnotations": {
+                    "type": "object"
+                },
+                "additionalLabels": {
+                    "type": "object"
+                }
+            }
+        },
+        "serviceMonitor": {
+            "type": "object",
+            "properties": {
+                "additionalAnnotations": {
+                    "type": "object"
+                },
+                "additionalLabels": {
+                    "type": "object"
+                },
+                "enabled": {
+                    "type": "boolean"
+                },
+                "interval": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
