@@ -15,4 +15,4 @@ jobs:
     - name: Generate values schema json
       uses: losisin/helm-values-schema-json-action@v2
       with:
-        input: values
+        values: values.yaml
