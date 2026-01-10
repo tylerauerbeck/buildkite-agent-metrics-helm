@@ -16,3 +16,5 @@ jobs:
       uses: losisin/helm-values-schema-json-action@v2
       with:
         values: values.yaml
+        git-push: true
+        git-commit-message: "fix: update values schema json"
