@@ -1,0 +1,32 @@
+name: Sign Helm Chart
+
+on:
+  workflow_dispatch:
+#  workflow_run:
+#    workflows: ["Publish Helm Chart to GHCR"]
+#    types: [completed]
+#    branches:
+#      - main 
+
+jobs:
+  sign-chart:
+    runs-on: ubuntu-latest
+#    if: ${{ github.event.workflow_run.conclusion == 'success' }} 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+      - name: Install cosign
+        uses: sigstore/cosign-installer@v3
+      - name: Extract chart name and version
+        id: chartinfo
+        run: |
+          CHART_NAME=$(helm show chart ./chart | grep '^name:' | awk '{print $2}')
+          VERSION=$(helm show chart ./chart | grep '^version:' | awk '{print $2}')
+          echo "name=${CHART_NAME}" >> $GITHUB_OUTPUT
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+      - name: Sign Chart
+        env:
+          COSIGN_EXPERIMENTAL: "1"
+        run: |
+          IMAGE="ghcr.io/${{ github.repository_owner }}/charts/${{ steps.chartinfo.outputs.name }}:${{ steps.chartinfo.outputs.version }}"
+          cosign sign --yes "${IMAGE}"
