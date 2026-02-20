@@ -30,7 +30,7 @@ deployment:
 
   image:
     repository: public.ecr.aws/buildkite/agent-metrics
-    tag: v5.11.0
+    tag: v5.12.0
     imagePullPolicy: "Always"
 
 config:
