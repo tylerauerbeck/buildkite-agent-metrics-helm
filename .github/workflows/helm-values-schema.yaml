@@ -16,7 +16,7 @@ jobs:
       with:
         ref: ${{ github.event.pull_request.head.ref }}
     - name: Generate values schema json
-      uses: losisin/helm-values-schema-json-action@v2
+      uses: losisin/helm-values-schema-json-action@v3
       with:
         values: values.yaml
         git-push: true
